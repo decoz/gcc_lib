@@ -439,3 +439,39 @@ int cmp_rid(rid *trid, rid *srid){
 }
 
 
+void *put_rid(rid *tgt, rid *src){
+	/*
+	 * tgt 에 src 의 패스를 따라가며 존재하지 안는 부분은 링크시킴
+	 * example :
+	 * rid *r = put(_r("a.b.c"), _r("a(b.x, y.z)")
+	 *
+	 * => a(b(c,x),y.z)
+	 */
+
+	if(tgt->cr == NULL) tgt->cr = src;
+	else put_rid_r(tgt->cr, src);
+
+}
+
+void *put_rid_r(rid *tgt, rid *src){
+	/*
+	 * put_rid 의 재귀루틴	 *
+	 */
+	if(src->rr != NULL) put_rid_r(tgt, src->rr);
+	src->rr = NULL;
+
+	if(cmp_rid(tgt, src)){ 		// match 경우
+		if(src->cr != NULL){
+			if(tgt->cr == NULL) tgt->cr = src->cr;
+			else put_rid_r(tgt->cr, src->cr);
+		}
+		remove_rid(src);
+	}
+	else if(tgt->rr != NULL) {	// 더이상 비교후보가 없으면
+		put_rid_r(tgt->rr, src);
+	} else tgt->rr = src;
+
+
+}
+
+

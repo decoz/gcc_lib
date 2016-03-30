@@ -8,6 +8,7 @@
 #define RID_H_
 
 #include "type.h"
+#include <stdlib.h>
 
 #define PSIZE 4
 #define SIZE 2
@@ -31,7 +32,7 @@ rid *create_empty_rid();
 
 char *create_str(rid *input);
 
-rid	*struct_rid_c(char *data,rid *rule);
+rid	*struct_rid_c(char *data,rid *rule = NULL);
 rid *struct_rid(rid *src,rid *rule);
 
 void remove_rid(rid *trid);
@@ -45,6 +46,9 @@ rid *link_brother(rid *elder, rid *younger);
 void unlink_child(rid *parent,rid *child);
 void unlink_child_n(rid *parent,int child_n);
 void unlink_child_all(rid *parent);
+
+void *put_rid_r(rid *tgt, rid *src);
+void *put_rid(rid *tgt, rid *src);
 
 
 rid *get_child_n(rid *parent, int n);
@@ -70,5 +74,6 @@ int cmp_rid(rid *trid, rid *srid);
 
 rid *serialize_struct(rid *input);
 rid *deserialize_struct(rid *input);
+
 
 #endif

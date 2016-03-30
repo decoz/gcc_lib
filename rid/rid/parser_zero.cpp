@@ -151,8 +151,11 @@ rid *create_token_rid(){
 				link_child(pos1,create_rid("A"));
 				link_child(pos1,create_rid("Z"));
 			rid *pos2 = link_child(pos,create_rid("-"));
-					link_child(pos2,create_rid("a"));
-					link_child(pos2,create_rid("z"));
+				link_child(pos2,create_rid("a"));
+				link_child(pos2,create_rid("z"));
+			rid *pos3 = link_child(pos,create_rid("-"));
+				link_child(pos3,create_rid("0"));
+				link_child(pos3,create_rid("9"));
 
 	rid *r3_method = create_rid("method");
 		link_child(r3,r3_method);

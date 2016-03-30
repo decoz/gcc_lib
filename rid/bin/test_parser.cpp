@@ -22,15 +22,19 @@ void match_pattern_h_test(rid *input);
 void create_irid_test();
 void parser_zero_test();
 void serialize_test();
+void put_rid_test();
 
 int main(void) {
 
+	/*
 	rid *fname = create_rid("packet.psr");
 	rid *frid = create_rid_f(fname);
 	printf("%d\n",frid->size);
 	print_rid(frid);
+	*/
 
-	parser_zero_test();
+	//parser_zero_test();
+	put_rid_test();
 
 	/*
 	rid *p = create_srg_parser();
@@ -47,6 +51,16 @@ int main(void) {
 	*/
 
 	return 0;
+}
+
+
+void put_rid_test(){
+
+	rid *data = struct_rid_c("a(b,c,d)",NULL);
+
+	put_rid(data, struct_rid_c("b(b1,b2),c(c1,c2),e", NULL));
+	print_rid(data);
+
 }
 
 void serialize_test(){

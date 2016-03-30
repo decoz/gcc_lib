@@ -414,8 +414,6 @@ int cmp_pattern(rid *src , rid *pat){
 		return 1;
 	}
 
-
-
 	if(cmp_rid(src,pat)) {
 		//printf("@");
 		return 1;
