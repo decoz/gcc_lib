@@ -47,10 +47,13 @@ void unlink_child(rid *parent,rid *child);
 void unlink_child_n(rid *parent,int child_n);
 void unlink_child_all(rid *parent);
 
-void *put_rid_r(rid *tgt, rid *src);
-void *put_rid(rid *tgt, rid *src);
+void put_rid_r(rid *tgt, rid *src);
+void put_rid(rid *tgt, rid *src);
+rid *get_rid_p(rid* src, rid *path);
+rid *get_rid(rid* src, rid *path);
 
 
+rid *get_child(rid *parent, rid *child);
 rid *get_child_n(rid *parent, int n);
 int get_child_count(rid *parent);
 rid *get_child_d(rid *parent, char *data);
@@ -74,6 +77,10 @@ int cmp_rid(rid *trid, rid *srid);
 
 rid *serialize_struct(rid *input);
 rid *deserialize_struct(rid *input);
+
+rid *rstr(rid *src);
+rid *rstr(char *str);
+rid *rtab(rid *str);
 
 
 #endif

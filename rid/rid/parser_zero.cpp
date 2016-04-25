@@ -16,6 +16,9 @@ rid *create_box_rid(){
 	rid *pos = link_child(b,create_rid("method"));
 			link_child(pos,create_rid("("));
 			link_child(pos,create_rid(")"));
+	pos = link_child(b,create_rid("method"));
+			link_child(pos,create_rid("["));
+			link_child(pos,create_rid("]"));
     return b;
 }
 
@@ -177,9 +180,11 @@ rid *create_token_rid(){
 		link_child(pos,create_rid("#"));
 		link_child(pos,create_rid("?"));
 		link_child(pos,create_rid("*"));
-		 */
-
-
+		link_child(pos,create_rid("-"));
+		link_child(pos,create_rid("_"));
+		link_child(pos,create_rid("\\"));
+		link_child(pos,create_rid("%"));
+		*/
 
 
 	link_child(rid_tok,r1);

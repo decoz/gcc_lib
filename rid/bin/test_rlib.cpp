@@ -23,6 +23,9 @@ void create_irid_test();
 void parser_zero_test();
 void serialize_test();
 void put_rid_test();
+void get_child_test();
+
+
 
 int main(void) {
 
@@ -34,6 +37,10 @@ int main(void) {
 	*/
 
 	//parser_zero_test();
+	printf("[get_child_test]\n");
+	get_child_test();
+
+	printf("[put_rid_test]\n");
 	put_rid_test();
 
 	/*
@@ -53,10 +60,25 @@ int main(void) {
 	return 0;
 }
 
+void get_child_test(){
+
+	rid *data = struct_rid_c("a.b.c",NULL);
+	/*
+	rid *p = get_child(data,create_rid("profile"));
+	print_rid(p);
+
+	*/
+
+	print_rid(data);
+
+
+
+}
+
 
 void put_rid_test(){
 
-	rid *data = struct_rid_c("a(b,c,d)",NULL);
+	rid *data = struct_rid_c("a(b,c,d[])",NULL);
 
 	put_rid(data, struct_rid_c("b(b1,b2),c(c1,c2),e", NULL));
 	print_rid(data);

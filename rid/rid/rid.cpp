@@ -247,6 +247,25 @@ rid *get_rid_n(rid *irid , int n){
 	return t;
 }
 
+rid *get_rid_by_path(rid *src, rid *path){
+/*
+ * rid path를 이용해 타겟 rid를 추출
+ * 경로가 잘못되거나 없는 경우 NULL을 리턴한다.
+ */
+
+
+	if( cmp_rid(src,path) > 0 ) {
+		if(path->cr == NULL) return src;
+		if(src->cr == NULL) return NULL;
+		else return get_rid_by_path( src->cr, path->cr );
+	}
+	else if(src->rr != NULL)
+		return get_rid_by_path(src->rr, path);
+	else return NULL;
+}
+
+
+
 rid *get_rid_by_path(rid *src,BYTE *path,int pc){
 	/*
 	 * path 문자열의 .1.1  이나  .1.3 등의 경로를 이용해
@@ -314,6 +333,19 @@ rid *get_gchild(rid *parent, char *data){
 
 }
 
+rid *get_child(rid *parent, rid *child){
+/*
+ * 가장 간단한 rid 와 같은 data 를 지닌 rid child를 찾고
+ * 없으면 NULL을 리턴
+ */
+	rid *t = parent->cr;
+	while(t != NULL){
+		if( cmp_rid(t, child) > 0 ) return t;
+		else t = t->rr;
+	}
+	return NULL;
+}
+
 
 
 int get_child_count(rid *parent){
@@ -360,6 +392,7 @@ rid *find_path(rid *root,char *subdata);
 */
 
 void print_rid(rid *root){
+	if(root == NULL) return;
 	int depth = 0;
 	print_rid_r(root,depth);
 
@@ -439,7 +472,7 @@ int cmp_rid(rid *trid, rid *srid){
 }
 
 
-void *put_rid(rid *tgt, rid *src){
+void put_rid(rid *tgt, rid *src){
 	/*
 	 * tgt 에 src 의 패스를 따라가며 존재하지 안는 부분은 링크시킴
 	 * example :
@@ -453,7 +486,7 @@ void *put_rid(rid *tgt, rid *src){
 
 }
 
-void *put_rid_r(rid *tgt, rid *src){
+void put_rid_r(rid *tgt, rid *src){
 	/*
 	 * put_rid 의 재귀루틴	 *
 	 */
@@ -471,7 +504,42 @@ void *put_rid_r(rid *tgt, rid *src){
 		put_rid_r(tgt->rr, src);
 	} else tgt->rr = src;
 
+}
 
+
+rid *get_rid(rid *src, rid *path){
+
+	rid *np = path, *cp = src;
+
+	rid *parent = NULL;
+
+	while(np != NULL){
+		cp = get_child(cp,np);
+		if(cp == NULL) return NULL;
+		else parent = cp;
+		np = np->cr;
+	}
+
+	return cp;
+}
+
+
+
+
+
+rid *get_rid_p(rid *src, rid *path){
+
+	rid *np = path, *cp = src->cr;
+	rid *parent = src;
+
+	while(np != NULL){
+		cp = get_child(cp,np);
+		if(cp == NULL) return NULL;
+		else parent = cp;
+		np = np->cr;
+	}
+
+	return parent;
 }
 
 
