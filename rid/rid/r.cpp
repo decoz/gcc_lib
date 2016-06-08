@@ -21,7 +21,7 @@ rid *rtab(rid *src){
  *	tab 苞 line feed 肺 备己等 巩过阑 颇教
  */
 
-	char *p = create_str(src),*np;
+	char *p = create_str(src),*np = p;
 	char *ep = p + strlen(p);
 
 

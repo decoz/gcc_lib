@@ -509,12 +509,16 @@ void put_rid_r(rid *tgt, rid *src){
 
 rid *get_rid(rid *src, rid *path){
 
+
 	rid *np = path, *cp = src;
 
 	rid *parent = NULL;
 
+	int i=0;
 	while(np != NULL){
 		cp = get_child(cp,np);
+		//printf("[%d]%s:%s",i++, create_str(cp), create_str(np));
+		//print_rid(cp);
 		if(cp == NULL) return NULL;
 		else parent = cp;
 		np = np->cr;
@@ -528,6 +532,7 @@ rid *get_rid(rid *src, rid *path){
 
 
 rid *get_rid_p(rid *src, rid *path){
+
 
 	rid *np = path, *cp = src->cr;
 	rid *parent = src;

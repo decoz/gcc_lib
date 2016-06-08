@@ -16,6 +16,8 @@ rid *create_rid_f(rid *fname){
 	 */
 	FILE *fp = fopen(create_str(fname),"r");
 
+	if(fp == NULL) return NULL;
+
 	fseek(fp,0,SEEK_END);
 	int size = ftell(fp);
 	BYTE *buffer = (BYTE*)malloc(size);
